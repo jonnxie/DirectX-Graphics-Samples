@@ -22,6 +22,7 @@
     <ClCompile Include="SimpleCamera.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
+    <ClCompile Include="D2DOffScreenRender.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -54,6 +55,8 @@
     <ClInclude Include="d3dx12.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
+    <ClInclude Include="D2DOffScreenRender.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -90,5 +93,8 @@
     <FxCompile Include="MeshletPS.hlsl">
       <Filter>Assets\Shaders</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="D3D12MeshletRender.rc" />
   </ItemGroup>
 </Project>

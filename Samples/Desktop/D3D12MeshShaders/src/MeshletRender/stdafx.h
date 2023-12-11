@@ -29,3 +29,14 @@
 #include <string>
 #include <wrl.h>
 #include <shellapi.h>
+#include <wrl.h>
+#include <wrl/client.h>
+#include <d3d11_2.h>
+#include <d2d1_3.h>
+#include <dwrite_2.h>
+#include <wincodec.h>
+#include <DirectXMath.h>
+#include <memory>
+#include <ppltasks.h>
+#include <iostream>
+#include <cstdlib>
