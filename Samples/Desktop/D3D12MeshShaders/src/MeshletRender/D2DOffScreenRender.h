@@ -17,7 +17,7 @@ public:
    void CreateWindowSizeDependentResources();
    void ReleaseDeviceDependentResources();
    void Render();
-   void GetTexture(ID3D11Texture2D** texture);
+   void GetTexture(ID3D12Resource** texture);
 private:
    void CreateEffect();
    void CreateGeometry();

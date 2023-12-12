@@ -101,7 +101,7 @@ void D2DOffScreenRender::ReleaseDeviceDependentResources(){
 void D2DOffScreenRender::Render(){
 
 }
-void D2DOffScreenRender::GetTexture(ID3D11Texture2D** texture) {
+void D2DOffScreenRender::GetTexture(ID3D12Resource** texture) {
 
 }
 void D2DOffScreenRender::CreateEffect(){
