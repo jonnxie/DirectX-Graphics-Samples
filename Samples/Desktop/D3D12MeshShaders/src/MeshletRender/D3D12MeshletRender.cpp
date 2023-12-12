@@ -16,6 +16,9 @@ const wchar_t* D3D12MeshletRender::c_meshFilename = L"..\\Assets\\Dragon_LOD0.bi
 
 const wchar_t* D3D12MeshletRender::c_meshShaderFilename = L"MeshletMS.cso";
 const wchar_t* D3D12MeshletRender::c_pixelShaderFilename = L"MeshletPS.cso";
+using namespace D2D1;
+using namespace DirectX;
+using namespace Microsoft::WRL;
 
 D3D12MeshletRender::D3D12MeshletRender(UINT width, UINT height, std::wstring name)
     : DXSample(width, height, name)
@@ -38,6 +41,7 @@ void D3D12MeshletRender::OnInit()
 
     LoadPipeline();
     LoadAssets();
+    InitDirect2D();
 }
 
 // Load the rendering pipeline dependencies.
@@ -440,6 +444,45 @@ void D3D12MeshletRender::WaitForGpu()
 
     // Increment the fence value for the current frame.
     m_fenceValues[m_frameIndex]++;
+}
+
+void D3D12MeshletRender::InitDirect2D()
+{
+          // Initialize Direct2D resources.
+    D2D1_FACTORY_OPTIONS options;
+    ZeroMemory(&options, sizeof(D2D1_FACTORY_OPTIONS));
+
+#if defined(_DEBUG)
+          // If the project is in a debug build, enable Direct2D debugging via SDK Layers.
+    options.debugLevel = D2D1_DEBUG_LEVEL_INFORMATION;
+#endif
+
+    // Initialize the Direct2D Factory.
+    ThrowIfFailed(
+              D2D1CreateFactory(
+                        D2D1_FACTORY_TYPE_SINGLE_THREADED,
+                        __uuidof(ID2D1Factory3),
+                        &options,
+                        &m_d2dFactory
+              )
+    );
+
+    // Create the Direct2D device object and a corresponding context.
+    ComPtr<IDXGIDevice3> dxgiDevice;
+     ThrowIfFailed(
+               m_device.As(&dxgiDevice)
+    );
+
+     ThrowIfFailed(
+              m_d2dFactory->CreateDevice(dxgiDevice.Get(), &m_d2dDevice)
+    );
+
+     ThrowIfFailed(
+              m_d2dDevice->CreateDeviceContext(
+                        D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
+                        &m_d2dContext
+              )
+    );
 }
 
 // Prepare to render the next frame.

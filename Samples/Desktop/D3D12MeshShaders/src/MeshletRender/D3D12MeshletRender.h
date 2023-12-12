@@ -90,4 +90,13 @@ private:
     static const wchar_t* c_meshFilename;
     static const wchar_t* c_meshShaderFilename;
     static const wchar_t* c_pixelShaderFilename;
+
+public:
+    ID2D1DeviceContext2* GetD2DDeviceContext() const { return m_d2dContext.Get(); }
+
+    void InitDirect2D();
+private:
+    ComPtr<ID2D1Factory3>       m_d2dFactory;
+    ComPtr<ID2D1DeviceContext2> m_d2dContext;
+    ComPtr<ID2D1Device2>        m_d2dDevice;
 };
