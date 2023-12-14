@@ -11,6 +11,7 @@
 
 #include "stdafx.h"
 #include "D3D12MeshletRender.h"
+#include <windows.ui.xaml.media.dxinterop.h>
 
 const wchar_t* D3D12MeshletRender::c_meshFilename = L"..\\Assets\\Dragon_LOD0.bin";
 
@@ -20,6 +21,10 @@ const wchar_t* D3D12MeshletRender::c_pixelShaderFilename = L"MeshletPS.cso";
 using namespace D2D1;
 using namespace DirectX;
 using namespace Microsoft::WRL;
+//using namespace Windows::Graphics::Display;
+//using namespace Windows::UI::Core;
+//using namespace Windows::UI::Xaml::Controls;
+//using namespace Platform;
 
 D3D12MeshletRender::D3D12MeshletRender(UINT width, UINT height, std::wstring name)
     : DXSample(width, height, name)
@@ -447,44 +452,6 @@ void D3D12MeshletRender::WaitForGpu()
     m_fenceValues[m_frameIndex]++;
 }
 
-void D3D12MeshletRender::InitDirect2D()
-{
-          // Initialize Direct2D resources.
-    D2D1_FACTORY_OPTIONS options;
-    ZeroMemory(&options, sizeof(D2D1_FACTORY_OPTIONS));
-
-#if defined(_DEBUG)
-          // If the project is in a debug build, enable Direct2D debugging via SDK Layers.
-    options.debugLevel = D2D1_DEBUG_LEVEL_INFORMATION;
-#endif
-
-    // Initialize the Direct2D Factory.
-    ThrowIfFailed(
-              D2D1CreateFactory(
-                        D2D1_FACTORY_TYPE_SINGLE_THREADED,
-                        __uuidof(ID2D1Factory3),
-                        &options,
-                        &m_d2dFactory
-              )
-    );
-
-    // Create the Direct2D device object and a corresponding context.
-    ComPtr<IDXGIDevice3> dxgiDevice;
-     ThrowIfFailed(
-               m_device.As(&dxgiDevice)
-    );
-
-     ThrowIfFailed(
-              m_d2dFactory->CreateDevice(dxgiDevice.Get(), &m_d2dDevice)
-    );
-
-     ThrowIfFailed(
-              m_d2dDevice->CreateDeviceContext(
-                        D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
-                        &m_d2dContext
-              )
-    );
-}
 
 // Prepare to render the next frame.
 void D3D12MeshletRender::MoveToNextFrame()
@@ -505,4 +472,51 @@ void D3D12MeshletRender::MoveToNextFrame()
 
     // Set the fence value for the next frame.
     m_fenceValues[m_frameIndex] = currentFenceValue + 1;
+}
+
+void D3D12MeshletRender::InitDirect2D()
+{
+          // Initialize Direct2D resources.
+          D2D1_FACTORY_OPTIONS options;
+          ZeroMemory(&options, sizeof(D2D1_FACTORY_OPTIONS));
+
+#if defined(_DEBUG)
+          // If the project is in a debug build, enable Direct2D debugging via SDK Layers.
+          options.debugLevel = D2D1_DEBUG_LEVEL_INFORMATION;
+#endif
+
+          // Initialize the Direct2D Factory.
+          ThrowIfFailed(
+                    D2D1CreateFactory(
+                              D2D1_FACTORY_TYPE_SINGLE_THREADED,
+                              __uuidof(ID2D1Factory3),
+                              &options,
+                              &m_d2dFactory
+                    )
+          );
+          // Create the Direct2D device object and a corresponding context.
+
+          ComPtr<IDXGIDevice3> dxgiDevice;
+
+          //ThrowIfFailed(
+          m_device->QueryInterface(IID_PPV_ARGS(&dxgiDevice));
+          //);
+
+          ////ThrowIfFailed(
+          m_d2dFactory->CreateDevice(dxgiDevice.Get(), &m_d2dDevice);
+          ////);
+
+          ComPtr <ID3D11Device> pD3D11Device;
+          ThrowIfFailed(
+          m_device->QueryInterface(IID_PPV_ARGS(&pD3D11Device))
+                    );
+
+          //D2D1CreateDevice(pD3D11Device, D2D1_CREATION_PROPERTIES(), &m_d2dDevice);
+
+          ThrowIfFailed(
+                    m_d2dDevice->CreateDeviceContext(
+                              D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
+                              &m_d2dContext
+                    )
+          );
 }

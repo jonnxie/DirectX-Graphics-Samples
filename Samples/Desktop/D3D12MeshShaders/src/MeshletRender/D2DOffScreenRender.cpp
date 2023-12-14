@@ -1,5 +1,12 @@
 #include "stdafx.h"
 #include "D2DOffScreenRender.h"
+#include "DXSampleHelper.h"
+#include <windows.ui.xaml.media.dxinterop.h>
+//
+//using namespace D2D1;
+//using namespace DirectX;
+//using namespace Microsoft::WRL;
+
 
 D2DOffScreenRender::D2DOffScreenRender(
           std::pair<float, float> begin,
@@ -113,3 +120,7 @@ void D2DOffScreenRender::CreateGeometry(){
 void D2DOffScreenRender::CreateTargetBitmap() {
 
 }
+
+
+
+

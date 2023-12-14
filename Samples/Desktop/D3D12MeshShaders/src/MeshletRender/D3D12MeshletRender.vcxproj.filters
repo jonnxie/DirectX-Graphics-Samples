@@ -94,7 +94,4 @@
       <Filter>Assets\Shaders</Filter>
     </FxCompile>
   </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="D3D12MeshletRender.rc" />
-  </ItemGroup>
 </Project>

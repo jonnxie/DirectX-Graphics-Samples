@@ -11,6 +11,7 @@
 
 #include "stdafx.h"
 #include "Win32Application.h"
+#include "DXSample.h"
 
 HWND Win32Application::m_hwnd = nullptr;
 

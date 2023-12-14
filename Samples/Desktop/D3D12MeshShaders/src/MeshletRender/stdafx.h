@@ -39,3 +39,5 @@
 #include <ppltasks.h>
 #include <iostream>
 #include <cstdlib>
+#include "d2d1_3.h"
+#include <d3d11_2.h>

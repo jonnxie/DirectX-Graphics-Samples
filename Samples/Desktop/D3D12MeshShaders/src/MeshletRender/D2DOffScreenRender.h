@@ -35,5 +35,6 @@ private:
     ComPtr<ID2D1SolidColorBrush> m_redSolidBrush;
     ComPtr<ID2D1DrawingStateBlock>  m_stateBlock;
     ComPtr<ID2D1Effect> m_glowEffect;
+
 };
 
